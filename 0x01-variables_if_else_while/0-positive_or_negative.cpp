@@ -2,7 +2,7 @@
 /**
  * Is_positive_or_Negative - checks if the random number
  * is positive or negative or zero and prints the answer accordingly
- * 
+ *
  */
 void Is_positive_or_Negative(void)
 {

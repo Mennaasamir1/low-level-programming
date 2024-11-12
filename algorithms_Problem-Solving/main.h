@@ -16,6 +16,8 @@ bool CheckPerfectNumber(int number);
 void PrintPerfectOrNot(int Number);
 void PrintAllPerfectNumbers(int N);
 void PrintReversedDigits(int Number);
+int SumOfDigits(int number);
+void printSumOfDigits(int Number);
 
 
 

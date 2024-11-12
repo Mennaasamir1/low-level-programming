@@ -19,7 +19,7 @@ int ReadAPositivenumber(void)
 }
 
 /**
- * PrintReversedDigits - reverses the number's digits
+ * PrintReversedDigits - prints the number's reversed digits
  * @Number: number whose digits to be reversed
  */
 void PrintReversedDigits(int Number)

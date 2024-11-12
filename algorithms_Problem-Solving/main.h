@@ -18,6 +18,7 @@ void PrintAllPerfectNumbers(int N);
 void PrintReversedDigits(int Number);
 int SumOfDigits(int number);
 void printSumOfDigits(int Number);
+int ReverseNumber(int Number);
 
 
 

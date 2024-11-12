@@ -1,5 +1,10 @@
 #include "main.h"
 
+/**
+ * ReadAPositivenumber - asks the user to enter a positive number.
+ *
+ * Return: input number
+ */
 int ReadAPositivenumber(void)
 {
     int i;

@@ -19,7 +19,12 @@ void PrintReversedDigits(int Number);
 int SumOfDigits(int number);
 void printSumOfDigits(int Number);
 int ReverseNumber(int Number);
-
+int DigitFrequency(int Number, short Digit);
+int ReadAPositivenumber2(string Message);
+void PrintAllDigitsFrequency(int Number);
+void PrintDigitsInOrder(int Number);
+bool IsPalindrome(int Number);
+void PrintPalindromeOrNot(int Number);
 
 
 #endif

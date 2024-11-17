@@ -24,12 +24,12 @@ int ReadAPositivenumber(void)
  */
 void PrintReversedDigits(int Number)
 {
-    int ReversedNum = 0;
+    int LastDigit = 0;
 
     while (Number > 0)
     {
-        ReversedNum = Number % 10;
+        LastDigit = Number % 10;
         Number = Number / 10;
-        cout << ReversedNum << endl;
+        cout << LastDigit << endl;
     }
 }

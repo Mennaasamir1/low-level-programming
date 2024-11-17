@@ -1,6 +1,5 @@
 #include "main.h"
 
-enum enIsPalindrome {Palindrome = 1, NotPalindrome = 0};
 /**
  * ReadAPositivenumberAndDigit - asks the user to enter a positive number.
  *
@@ -45,10 +44,7 @@ int ReverseNumber(int Number)
  */
 bool IsPalindrome(int Number)
 {
-    if (ReverseNumber(Number) == Number)
-        return (enIsPalindrome::Palindrome);
-    else
-        return (enIsPalindrome::NotPalindrome);
+    return (Number == ReverseNumber(Number));
 }
 /**
  * PrintPalindromeOrNot - prints the result (palindrome or not)
@@ -58,7 +54,7 @@ void PrintPalindromeOrNot(int Number)
 {
     cout << endl;
 
-    if (IsPalindrome(Number) == enIsPalindrome::Palindrome)
+    if (IsPalindrome(Number))
     {
         cout << "Palindrome" << endl;
     }

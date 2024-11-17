@@ -25,6 +25,8 @@ void PrintAllDigitsFrequency(int Number);
 void PrintDigitsInOrder(int Number);
 bool IsPalindrome(int Number);
 void PrintPalindromeOrNot(int Number);
+void PrintInvertedNumber(int N);
+void PrintNumberPattern(int Number);
 
 
 #endif

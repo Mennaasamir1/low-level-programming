@@ -29,6 +29,7 @@ void PrintInvertedNumber(int N);
 void PrintNumberPattern(int Number);
 void PrintInvertedAlphabetPattern(int Number);
 void PrintAlphabetPattern(int Number);
+void PrintAllWordsFromAAAToZZZ(void);
 
 
 #endif

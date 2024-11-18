@@ -27,6 +27,8 @@ bool IsPalindrome(int Number);
 void PrintPalindromeOrNot(int Number);
 void PrintInvertedNumber(int N);
 void PrintNumberPattern(int Number);
+void PrintInvertedAlphabetPattern(int Number);
+void PrintAlphabetPattern(int Number);
 
 
 #endif

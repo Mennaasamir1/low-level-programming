@@ -6,8 +6,8 @@ namespace MyFunctions
 {
     /**
      * GenerateRandomnumbers - generates random numbers between Min and Max
-     * @Min - the minimum number
-     * @Max - the maximum number
+     * @Min: the minimum number
+     * @Max: the maximum number
      * Return: the random number generated
      */
     int GenerateRandomnumbers(int Min, int Max)
@@ -17,7 +17,7 @@ namespace MyFunctions
 
     /**
      * Generate3X3Matrix - generates a 3x3 matrix
-     * @arr - the 3x3 matrix
+     * @arr: the 3x3 matrix
      */
     void Generate3X3Matrix(int arr[3][3])
     {
@@ -27,16 +27,16 @@ namespace MyFunctions
         {
             for (Col = 0; Col < 3; Col++)
             {
-                arr[Row][Col] = MyFunctions::GenerateRandomnumbers(1, 100);
+                arr[Row][Col] = MyFunctions::GenerateRandomnumbers(1, 10);
             }
         }
     }
 
     /**
      * PrintMatrix - prints the 3x3 matrix
-     * @arr - the 3x3 matrix
-     * @Rows - the number of rows
-     * @Cols - the number of columns
+     * @arr: the 3x3 matrix
+     * @Rows: the number of rows
+     * @Cols: the number of columns
      */
 
     void PrintMatrix(int arr[3][3], int Rows, int Cols)
@@ -53,9 +53,9 @@ namespace MyFunctions
 
     /**
      * SumOfRowsInMatrix - sums the elements in a row
-     * @arr - the 3x3 matrix
-     * @RowNum - the row number
-     * @Cols - the number of columns
+     * @arr: the 3x3 matrix
+     * @RowNum: the row number
+     * @Cols: the number of columns
      * Return: the sum of the elements in the row
      */
     int SumOfRowsInMatrix(int arr[3][3], int RowNum, int Cols)
@@ -225,4 +225,123 @@ namespace MyFunctions
             cout << endl;
         }
    }
+
+   /**
+    * TransposeMatrix - transposes the matrix
+    * @arr: original Matrix
+    * @arr2: Copy Matrix
+    */
+   void TransposeMatrix(int arr[3][3], int arr2[3][3])
+   {
+        int i, j;
+
+        for (i = 0; i < 3; i++)
+        {
+            for (j = 0; j < 3; j++)
+            {
+                arr2[i][j] = arr[j][i];
+            }
+        }
+   }
+
+   /**
+    * PrintMatrixFormatted - prints the matrix in a formatted pattern
+    * @Rows: Number of rows in matrix
+    * @Cols: Number of columns in matrix
+    */
+   void PrintMatrixFormatted(int arr[3][3], int Rows, int Cols)
+    {
+        for (Rows = 0; Rows < 3; Rows++)
+        {
+            for (Cols = 0; Cols < 3; Cols++)
+            {
+                printf(" %0*d   ", 2, arr[Rows][Cols]);
+            }
+            cout << endl;
+        }
+    }
+
+    /**
+     * MulOfMatrices - multiplies two matrices members
+     * @arr: matrix 1
+     * @arr2: matrix 2
+     * @arr3: stores the multiplied matrix
+     * @Rows: Number of rows
+     * @Cols: Number of cols
+     */
+    void MulOfMatrices(int arr[3][3], int arr2[3][3], int arr3[3][3], short Rows, short Cols)
+    {
+        int i, j;
+
+        for (i = 0; i < Rows; i++)
+        {
+            for (j = 0; j < Cols; j++)
+            {
+                arr3[i][j] = arr[i][j] * arr2[i][j];
+            }
+        }
+    }
+
+    /**
+     * PrintMiddleRow - prints the middle row in a matrix
+     * @Matrix: matrix
+     * @Rows: number of rows
+     * @Cols: number of cols
+     */
+    void PrintMiddleRow(int Matrix[3][3], int Rows, int Cols)
+    {
+        int i;
+        int MiddleRow = Rows / 2;
+        
+        cout << "\nThe middle Row: " << endl;
+        for (i = 0; i < Cols; i++)
+        {
+            printf(" %0*d  ", 2, Matrix[MiddleRow][i]);
+        }
+        cout << endl;
+    }
+
+    /**
+     * PrintMiddleColumn - prints the middle column in a matrix
+     * @Matrix: Matrix
+     * @Rows: number of rows
+     * @Cols: number of cols
+     */
+    void PrintMiddleColumn(int Matrix[3][3], int Rows, int Cols)
+    {
+        int i, MiddleCol;
+
+        MiddleCol = Cols / 2;
+
+        cout << "\nThe middle column: " << endl; 
+        for (i = 0; i < Rows; i++)
+        {
+           printf(" %0*d  ", 2, Matrix[i][MiddleCol]);
+        }
+        cout << endl;
+    }
+
+    /**
+     * SumOfMatrixMembers - sums up all the numbers in a matrix
+     * @Matrix: the matrix
+     * @Rows: number of rows
+     * @Cols: number of columns
+     * Return: the sum of numbers
+     */
+    int SumOfMatrixMembers(int Matrix[3][3], int Rows, int Cols)
+    {
+        int i, j;
+        int Sum = 0;
+
+        for (i = 0; i < Rows; i++)
+        {
+            for (j = 0; j < Cols; j++)
+            {
+                Sum += Matrix[i][j];
+            }
+        }
+
+        return (Sum);
+    }
+
 }

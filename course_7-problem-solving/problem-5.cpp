@@ -10,6 +10,7 @@ int main(void)
 
     MyFunctions::Generate3X3Matrix(arr);
 
+    MyFunctions::FillMatrixFrom1To9(arr);
     cout << "The matrix is: " << endl;
 
     MyFunctions::PrintMatrix(arr, 3, 3);

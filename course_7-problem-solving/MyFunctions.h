@@ -1,3 +1,4 @@
+
 #include <iostream>
 using namespace std;
 #include <iomanip>
@@ -27,7 +28,7 @@ namespace MyFunctions
         {
             for (Col = 0; Col < 3; Col++)
             {
-                arr[Row][Col] = MyFunctions::GenerateRandomnumbers(1, 10);
+                arr[Row][Col] = MyFunctions::GenerateRandomnumbers(1, 100);
             }
         }
     }
@@ -342,6 +343,289 @@ namespace MyFunctions
         }
 
         return (Sum);
+    }
+
+    /**
+     * CheckMatricesEquality - checks if the sum of two matrices is equal
+     * @arr1: matrix 1
+     * @arr2: matrix 2
+     * @Rows: num of rows
+     * @Cols: num of columns
+     * Return: 1 if they're equal, 0 if not
+     */
+
+    bool CheckMatricesEquality(int arr1[3][3], int arr2[3][3], int Rows, int Cols)
+    {
+        if (MyFunctions::SumOfMatrixMembers(arr1, Rows, Cols) == MyFunctions::SumOfMatrixMembers(arr2, Rows, Cols))
+        {
+            return (1);
+        }
+
+        else
+        {
+            return (0);
+        }
+    }
+
+    /**
+     * CheckTypicalOrNot - checks if two matrices are typical or not (have the same elements)
+     * or not
+     * @M1: matrix 1
+     * @M2: matrix 2
+     * @Rows: num of rows
+     * @Cols: num of columns
+     * Return: 1 if they're typical, 0 if not
+     */
+    bool CheckTypicalOrNot(int M1[3][3], int M2[3][3], int Rows, int Cols)
+    {
+        int i, j;
+
+        for (i = 0; i < Rows; i++)
+        {
+            for (j = 0; j < Cols; j++)
+            {
+                if (M1[i][j] != M2[i][j])
+                {
+                    return (false);
+                }
+            }
+        }
+
+        return (true);
+    }
+    
+    /**
+     * CheckIdentityMatrix - checks if a matrix is identity or not
+     * @array: the matrix
+     * @Rows: num of rows
+     * @Cols: num of columns
+     * Return: 1 if it's identity, 0 if not
+     */
+    bool CheckIdentityMatrix(int array[3][3], int Rows, int Cols)
+    {
+        int i, j;
+
+        for (i = 0; i < Rows; i++)
+        {
+            for (j = 0; j < Cols; j++)
+            {
+                /* check if diagonal elements = 1*/
+
+                if (i == j && array[i][j] != 1)
+                {
+                    return (false);
+                }
+
+                /* checks if the rest of elements are equal to zero */
+                else if (i != j && array[i][j] != 0)
+                {
+                    return (false);
+                }
+            }
+        }
+
+        return (true);
+    }
+
+    /**
+     * IsScalarMatrix - checks if the matrix is scalar or not
+     * (scalar matrix): where the diagonal elements are equal and the rest are zeros
+     *
+     * @Matrix: the matrix
+     * @Rows: number of rows
+     * @Cols: number of columns
+     * Return: 1 if it's scalar, 0 if not
+     */
+    bool IsScalarMatrix(int Matrix[3][3], int Rows, int Cols)
+    {
+        int i, j;
+        int FirstDiagonalElement = Matrix[0][0];
+
+        for (i = 0; i < Rows; i++)
+        {
+            for (j = 0; j < Cols; j++)
+            {
+                if (i == j && Matrix[i][j] != FirstDiagonalElement)
+                {
+                    return (false);
+                }
+
+                else if (i != j && Matrix[i][j] != 0)
+                {
+                    return (false);
+                }
+            }
+        }
+        return (true);
+    }
+
+    /**
+     * ElementOccurrenceInMatrix - counts the number of times an element
+     * has occurred in a matrix
+     *
+     * @arr: the matrix
+     * @Rows: num of rows
+     * @Cols: num of cols
+     * @Element: the element to be checked
+     * Return: the number of times
+     */
+    short ElementOccurrenceInMatrix(int arr[3][3], short Rows, short Cols, short Element)
+    {
+        short i, j, Count = 0;
+
+        for (i = 0; i < Rows; i++)
+        {
+            for (j = 0; j < Cols; j++)
+            {
+                if (arr[i][j] == Element)
+                {
+                    Count++;
+                }
+            }
+        }
+        return (Count);
+    }
+
+    /**
+     * IsSparseMatrix - checks if a matrix is sparse
+     * (number of zeros is greater than other numbers) or not
+     *
+     * @arr: the matrix
+     * @Rows: num of rows
+     * @Cols: num of columns
+     * Return: 1 if it's sparse, 0 if not
+     */
+    bool IsSparseMatrix(int arr[3][3], short Rows, short Cols)
+    {
+        short MatrixSize = Rows * Cols;
+        short i, j;
+
+        return (ElementOccurrenceInMatrix(arr, Rows, Cols, 0) >= (MatrixSize / 2));
+
+    }
+
+    /**
+     * IsNumberInMatrix - checks if a number is in the matrix
+     * @Rows: num of Rows
+     * @Cols: num of columns
+     * @Element: number to be checked
+     * Return: true if it exists, false if not
+     */
+    bool IsNumberInMatrix(int Matrix[3][3], short Rows, short Cols, short Element)
+    {
+        short i, j;
+
+        for (i = 0; i < Rows; i++)
+        {
+            for (j = 0; j < Cols; j++)
+            {
+                if (Matrix[i][j] == Element)
+                {
+                    return (true);
+                }
+            }
+        }
+        return (false);
+    }
+
+    /**
+     * PrintIntersectedElements - prints the intersected elements between 2 elements
+     * @arr: matrix 1
+     * @arr2: matrix 2
+     * @R: num of rows
+     * @C: num of columns
+    */
+    void PrintIntersectedElements(int arr[3][3], int arr2[3][3], short R, short C)
+    {
+        int i, j, Number;
+
+        for (i = 0; i < R; i++)
+        {
+            for (j = 0; j < C; j++)
+            {
+                Number = arr[i][j];
+
+                if (IsNumberInMatrix(arr2, 3, 3, Number))
+                {
+                    cout << setw(3) << Number << "  ";
+                }
+            }
+        }
+    }
+
+    /**
+     * FindMaxNumberInMatrix - finds the maximum number in matrix
+     * @arr: matrix
+     * @Rows: num of rows
+     * @Cols: num of cols
+     * Return: the maximum number in matrix
+     */
+    short FindMaxNumberInMatrix(int arr[3][3], short Rows, short Cols)
+    {
+        short MaxNum, i, j;
+    
+        MaxNum = arr[0][0];
+        for (i = 0; i < Rows; i++)
+        {
+            for (j = 0; j < Cols; j++)
+            {
+                if (arr[i][j] > MaxNum)
+                {
+                    MaxNum = arr[i][j];
+                }
+            }
+        }
+        return (MaxNum);
+    }
+
+    /**
+     * FindMinNumberInMatrix - finds the minimum element in matrix
+     * @arr: matrix
+     * @Rows: num of rows
+     * @Cols: num of columns
+     * Return: the minimum element
+     */
+    short FindMinNumberInMatrix(int arr[3][3], short Rows, short Cols)
+    {
+        short MinNum, i, j;
+    
+        MinNum = arr[0][0];
+        for (i = 0; i < Rows; i++)
+        {
+            for (j = 0; j < Cols; j++)
+            {
+                if (arr[i][j] < MinNum)
+                {
+                    MinNum = arr[i][j];
+                }
+            }
+        }
+        return (MinNum);
+    }
+
+    /**
+     * IsPalindromeMatrix - a function that checks if a matrix is palindrome
+     * @arr: matrix
+     * @Rows: num of rows
+     * @Cols: num of columns
+     * Return: 1 if it's palindrome, 0 if not
+     */
+    bool IsPalindromeMatrix(int arr[3][3], short Rows, short Cols)
+    {
+        short i, j;
+
+        for (i = 0; i < Rows; i++)
+        {
+            for (j = 0; j < Cols / 2; j++)
+            {
+                /* check if the first element in the rows != last element in the row. */
+                if (arr[i][j] != arr[i][Cols - 1 - j])
+                {
+                    return (false);
+                }
+            }
+        }
+        return (true);
     }
 
 }

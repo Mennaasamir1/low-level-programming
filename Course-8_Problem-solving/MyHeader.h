@@ -1,6 +1,10 @@
 #include <iostream>
 using namespace std;
 
+struct stDate
+{
+    short Day, Month, Year;
+};
 
 namespace MyHeader
 {
@@ -137,9 +141,11 @@ namespace MyHeader
     short NumberOfDaysInMon(short Month, short Year)
     {
         short Months[12] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
-        
-        if (Month < 1 || Month < 12)
+
+        if (Month < 1 || Month > 12)
+        {
             return (0);
+        }
 
         return (Month == 2 && LeapYearOrNot(Year) ? 29 : Months[Month - 1]);
     }
@@ -157,6 +163,118 @@ namespace MyHeader
     int NumberOfSecsInMonth(short Month, short Year)
     {
         return (NumberOfMinsInMonth(Month, Year) * 60);
+    }
+
+    short WeekDayOrder(short Day, short Month, short Year)
+    {
+        short a = (14 - Month) / 12;
+        short y = Year - a;
+        short m = Month + (12 * a) - 2;
+        short d;
+
+        d = (Day + y + (y / 4) - (y / 100) + (y / 400) + ((31 * m) / 12));
+
+        return (d % 7);
+    }
+
+    string WeekDayName(short Day)
+    {
+        string Days[7] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
+
+        return (Days[Day]);
+    }
+
+    string MonthName(short Month)
+    {
+        string Months[12] = {"Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                            "Jul", "Aug", "Sep", "Oct","Nov", "Dec"};
+
+        return (Months[Month - 1]);
+    }
+
+    void PrintMonthCalender(short Month, short Year)
+    {
+        short Current = WeekDayOrder(1, Month, Year);
+        short DaysOfMonth = NumberOfDaysInMon(Month, Year);
+        short i, j;
+
+        printf("\n-----------------%s------------------\n\n", MonthName(Month).c_str());
+        printf("  Sun  Mon  Tue  Wed  Thu  Fri  Sat\n");
+
+        /*Handle spaces*/
+        for (i = 0; i < Current; i++)
+        {
+            printf("     ");
+        }
+
+        for (j = 1; j <= DaysOfMonth; j++)
+        {
+            printf("%5d", j);
+
+            if (++i == 7)
+            {
+                i = 0;
+                printf("\n");
+            }
+        }
+
+        printf("  \n-------------------------------------\n");
+
+    }
+
+    void PrintYearCalender(short Year)
+    {
+        int i;
+
+        printf("\n ---------------------------------------\n\n");
+        printf("           Calendar - %d\n", Year);
+        printf("\n----------------------------------------\n");
+
+        for (i = 1; i <= 12; i++)
+        {
+            PrintMonthCalender(i, Year);
+            printf("\n");
+        }
+    }
+
+    short TotalDaysFromBeginningOfYear(short Day, short Month, short Year)
+    {
+        short i;
+        short Days = 0;
+
+        for (i = 1; i < Month; i++)
+        {
+            Days += NumberOfDaysInMon(i, Year);
+        }
+        Days += Day;
+
+        return (Days);
+    }
+
+    stDate GetTheExactDate(short DaysPassed, short Year)
+    {
+        stDate Date;
+        short DaysOfMonth;
+
+        Date.Month = 1;
+
+        while (true)
+        {
+            DaysOfMonth = NumberOfDaysInMon(Date.Month, Year);
+            
+            if (DaysPassed > DaysOfMonth)
+            {
+                DaysPassed -= DaysOfMonth;
+                Date.Month++;
+            }
+            else
+            {
+                Date.Day = DaysPassed;
+                Date.Year = Year;
+                break;
+            }
+        }
+        return (Date);
     }
     
 }

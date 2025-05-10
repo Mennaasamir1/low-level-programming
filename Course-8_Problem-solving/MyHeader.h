@@ -251,11 +251,34 @@ namespace MyHeader
         return (Days);
     }
 
+    stDate ReadFullDate(void)
+    {
+        stDate Date;
+
+        Date.Day = ReadNumber("Enter Day: ");
+        Date.Month = ReadNumber("Enter Month: ");
+        Date.Year = ReadNumber("Enter Year: ");
+
+        
+        return (Date);
+    }
+
+    short ReadDays(void)
+    {
+        short Days;
+
+        cout << "Enter number of days to be added: ";
+        cin >> Days;
+        return (Days);
+    }
+
     stDate GetTheExactDate(short DaysPassed, short Year)
     {
         stDate Date;
         short DaysOfMonth;
 
+
+        Date.Year = Year;
         Date.Month = 1;
 
         while (true)
@@ -266,15 +289,65 @@ namespace MyHeader
             {
                 DaysPassed -= DaysOfMonth;
                 Date.Month++;
+
             }
             else
             {
                 Date.Day = DaysPassed;
-                Date.Year = Year;
                 break;
             }
         }
         return (Date);
     }
-    
+
+    stDate AddDaysToDate(short DaysToBeAdded, stDate Date)
+    {
+        short RemainingDays = DaysToBeAdded + TotalDaysFromBeginningOfYear(Date.Day, Date.Month, Date.Year);
+        short MonthDays = 0;
+        Date.Month = 1;
+
+        while (true)
+        {
+            MonthDays = NumberOfDaysInMon(Date.Month, Date.Year);
+
+            if (RemainingDays > MonthDays)
+            {
+                RemainingDays -= MonthDays;
+                Date.Month++;
+
+                if (Date.Month > 12)
+                {
+                    Date.Month = 1;
+                    Date.Year++;
+                }
+            }
+            else
+            {
+                Date.Day = RemainingDays;
+                break;
+            }
+        }
+        return (Date);
+    }
+
+    bool IsDate1BeforeDate2(stDate Date1, stDate Date2)
+    {
+        return ((Date1.Year < Date2.Year) ? true  : (Date1.Year == Date2.Year) ? (Date1.Month < Date2.Month) ? true : (Date1.Month == Date2.Month ? Date1.Day < Date2.Day : false) : false);
+    }
+
+    bool IsDate1EqualToDate2(stDate Date1, stDate Date2)
+    {
+        return (((Date1.Year == Date2.Year) && (Date1.Month = Date2.Month) && (Date1.Day == Date2.Day)) ? true : false);
+    }
+
+    bool IsLastDayInMonth(stDate Date)
+    {
+        return (Date.Day == NumberOfDaysInMon(Date.Month, Date.Year));
+    }
+
+    bool IsLastMonthInYear(short Month)
+    {
+        return (Month == 12);
+    }
+
 }

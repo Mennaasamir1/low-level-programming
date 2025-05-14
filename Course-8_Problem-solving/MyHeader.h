@@ -374,6 +374,29 @@ namespace MyHeader
         return (Date);
     }
 
+    stDate DecreaseDateByOneDay(stDate Date)
+    {
+        if (Date.Day == 1)
+        {
+            if (Date.Month == 1)
+            {
+                Date.Day = 31;
+                Date.Month = 12;
+                Date.Year--;
+            }
+            else
+            {
+                Date.Month--;
+                Date.Day = NumberOfDaysInMon(Date.Month, Date.Year);
+            }
+        }
+        else
+        {
+            Date.Day--;
+        }
+        return (Date);
+    }
+
     void SwapDates(stDate &Date1, stDate &Date2)
     {
         stDate Temp;
@@ -540,6 +563,117 @@ namespace MyHeader
     stDate IncreaseDateByOneMillennium(stDate Date)
     {
         Date.Year += 1000;
+
+        return (Date);
+    }
+
+    stDate DecreaseDateByXDays(stDate Date, short NumOfDays)
+    {
+        short i;
+
+        for (i = 1; i <= NumOfDays; i++)
+        {
+            Date = DecreaseDateByOneDay(Date);
+        }
+
+        return (Date);
+    }
+
+    stDate DecreaseDateByOneWeek(stDate Date)
+    {
+        short i;
+
+        for (i = 1; i <= 7; i++)
+        {
+            Date = DecreaseDateByOneDay(Date);
+        }
+        return (Date);
+    }
+
+    stDate DecreaseDateByXWeeks(stDate Date, short NumOfWeeks)
+    {
+        short i;
+
+        for (i = 1; i <= NumOfWeeks; i++)
+        {
+            Date = DecreaseDateByOneWeek(Date);
+        }
+        return (Date);
+    }
+
+    stDate DecreaseDateByOneMonth(stDate Date)
+    {
+        short Days = 0;
+
+        if (Date.Month == 1)
+        {
+            Date.Month = 12;
+            Date.Day = NumberOfDaysInMon(Date.Month, Date.Year);
+            Date.Year--;
+        }
+        else
+        {
+            Date.Month--;
+        }
+
+        Days = NumberOfDaysInMon(Date.Month, Date.Year);
+
+        if (Date.Day > Days)
+        {
+            Date.Day = Days;
+        }
+        return (Date);
+    }
+
+    stDate DecreaseDateByXMonths(stDate Date, short Months)
+    {
+        short i;
+
+        for (i = 1; i <= Months; i++)
+        {
+            Date = DecreaseDateByOneMonth(Date);
+        }
+        return (Date);
+    }
+
+    stDate DecreaseDateByOneYear(stDate Date)
+    {
+        Date.Year--;
+
+        return (Date);
+    }
+
+    stDate DecreaseDateByXYears(stDate Date, short Years)
+    {
+        Date.Year -= Years;
+
+        return (Date);
+    }
+
+    stDate DecreaseByOneDecade(stDate Date)
+    {
+        Date.Year -= 10;
+
+        return (Date);
+    }
+
+    stDate DecreasingByXDecades(stDate Date, short Decades)
+    {
+        Date.Year -= (10 * Decades);
+
+        return (Date);
+    }
+
+    stDate DecreasingByOneCentury(stDate Date)
+    {
+        Date.Year -= 100;
+
+        return (Date);
+    }
+
+    stDate DecreasingOneMillennium(stDate Date)
+    {
+        Date.Year -= 1000;
 
         return (Date);
     }

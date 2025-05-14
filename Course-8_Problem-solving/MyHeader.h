@@ -1,4 +1,5 @@
 #include <iostream>
+#include <ctime>
 using namespace std;
 
 struct stDate
@@ -350,4 +351,196 @@ namespace MyHeader
         return (Month == 12);
     }
 
+    stDate IncreaseDateByOne(stDate Date)
+    {
+        if (IsLastDayInMonth(Date))
+        {
+            if (IsLastMonthInYear(Date.Month))
+            {
+                Date.Day = 1;
+                Date.Month = 1;
+                Date.Year++;
+            }
+            else
+            {
+                Date.Day = 1;
+                Date.Month++;
+            }
+        }
+        else
+        {
+            Date.Day++;
+        }
+        return (Date);
+    }
+
+    void SwapDates(stDate &Date1, stDate &Date2)
+    {
+        stDate Temp;
+
+        Temp.Year = Date1.Year;
+        Temp.Month = Date1.Month;
+        Temp.Day = Date1.Day;
+
+        Date1.Year = Date2.Year;
+        Date1.Month = Date2.Month;
+        Date1.Day = Date2.Day;
+
+        Date2.Year = Temp.Year;
+        Date2.Month = Temp.Month;
+        Date2.Day = Temp.Day;
+    }
+
+    int CalculateDifferenceInDays(stDate Date1, stDate Date2, bool IncludeDay = false)
+    {
+        int Days = 0;
+        short SwapFlagValue = 1;
+
+        if (!IsDate1BeforeDate2(Date1, Date2))
+        {
+            SwapFlagValue = -1;
+            SwapDates(Date1, Date2);
+        }
+
+        while (IsDate1BeforeDate2(Date1, Date2))
+        {
+            Days++;
+            Date1 = IncreaseDateByOne(Date1);
+        }
+
+        return (IncludeDay ? ++Days * SwapFlagValue : Days * SwapFlagValue);
+    }
+
+    stDate GetSystemDate(void)
+    {
+        stDate Date;
+        time_t t = time(0);
+        tm *Now = localtime(&t);
+
+        Date.Year = Now->tm_year + 1900;
+        Date.Month = Now->tm_mon + 1;
+        Date.Day = Now->tm_mday;
+
+        return (Date);
+    }
+
+    int HowManyDaysHaveYouLived(stDate Date1, stDate Date2, bool IncludeEndDay = false)
+    {
+        int Days = 0;
+
+        while (IsDate1BeforeDate2(Date1, Date2))
+        {
+            Days++;
+            Date1 = IncreaseDateByOne(Date1);
+        }
+        return (IncludeEndDay ? ++Days : Days);
+    }
+
+    stDate IncreaseDateByXDays(stDate Date, short Days)
+    {
+        short i;
+
+        for (i = 1; i <= Days; i++)
+        {
+            Date = IncreaseDateByOne(Date);
+        }
+        return (Date);
+    }
+
+    stDate IncreaseDateByOneWeek(stDate Date)
+    {
+        short i;
+
+        for (i = 1; i <= 7; i++)
+        {
+            Date = IncreaseDateByOne(Date);
+        }
+        return (Date);
+    }
+
+    stDate IncreaseDateByXWeeks(stDate Date, short WeeksNumber)
+    {
+        short Week;
+
+        for (Week = 1; Week <= WeeksNumber; Week++)
+        {
+            Date = IncreaseDateByOneWeek(Date);
+        }
+        return (Date);
+    }
+
+    stDate IncreaseDateByOneMonth(stDate Date)
+    {
+        short DaysInThisMonth;
+
+        if (Date.Month == 12)
+        {
+            Date.Month = 1;
+            Date.Year++;
+        }
+        else
+        {
+            Date.Month++;
+        }
+
+        DaysInThisMonth =  NumberOfDaysInMon(Date.Month, Date.Year);
+        if (Date.Day > DaysInThisMonth)
+        {
+            Date.Day = DaysInThisMonth;
+        }
+        return (Date);
+    }
+
+    stDate IncreaseDateByXMonths(stDate Date, short NumOfMonths)
+    {
+        short i;
+
+        for (i = 1; i <= NumOfMonths; i++)
+        {
+            Date = IncreaseDateByOneMonth(Date);
+        }
+        return (Date);
+    }
+
+    stDate IncreaseDateByOneYear(stDate Date)
+    {
+        Date.Year++;
+
+        return (Date);
+    }
+
+    stDate IncreaseDateByXYears(stDate Date, short NumOfYears)
+    {
+        Date.Year += NumOfYears;
+
+        return (Date);
+    }
+
+    stDate IncreaseDateByOneDecade(stDate Date)
+    {
+        Date.Year += 10;
+
+        return (Date);
+    }
+
+    stDate IncreaseDateByXDecades(stDate Date, short NumOfDecades)
+    {
+        Date.Year += (10 * NumOfDecades);
+
+        return (Date);
+    }
+
+    stDate IncreaseDateByOneCentury(stDate Date)
+    {
+        Date.Year += 100;
+
+        return (Date);
+    }
+
+    stDate IncreaseDateByOneMillennium(stDate Date)
+    {
+        Date.Year += 1000;
+
+        return (Date);
+    }
 }

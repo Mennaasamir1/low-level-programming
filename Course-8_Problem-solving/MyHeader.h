@@ -178,6 +178,11 @@ namespace MyHeader
         return (d % 7);
     }
 
+    short WeekDayOrder(stDate Date)
+    {
+        return (WeekDayOrder(Date.Day, Date.Month, Date.Year));    
+    }
+
     string WeekDayName(short Day)
     {
         string Days[7] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
@@ -248,6 +253,20 @@ namespace MyHeader
             Days += NumberOfDaysInMon(i, Year);
         }
         Days += Day;
+
+        return (Days);
+    }
+
+    short TotalDaysFromBeginningOfYear(stDate Date)
+    {
+        short i;
+        short Days = 0;
+
+        for (i = 1; i < Date.Month; i++)
+        {
+            Days += NumberOfDaysInMon(i, Date.Year);
+        }
+        Days += Date.Day;
 
         return (Days);
     }
@@ -608,7 +627,6 @@ namespace MyHeader
         if (Date.Month == 1)
         {
             Date.Month = 12;
-            Date.Day = NumberOfDaysInMon(Date.Month, Date.Year);
             Date.Year--;
         }
         else
@@ -659,7 +677,7 @@ namespace MyHeader
 
     stDate DecreasingByXDecades(stDate Date, short Decades)
     {
-        Date.Year -= (10 * Decades);
+        Date.Year -= 10 * Decades;
 
         return (Date);
     }
@@ -676,5 +694,92 @@ namespace MyHeader
         Date.Year -= 1000;
 
         return (Date);
+    }
+
+    bool IsEndOfWeek(stDate Date)
+    {
+        return (WeekDayOrder(Date) == 6);
+    }
+
+    bool IsWeekEnd(stDate Date)
+    {
+        short DayIndex = WeekDayOrder(Date);
+
+        return (DayIndex == 5 || DayIndex == 6);
+    }
+
+    bool IsBusinessDay(stDate Date)
+    {
+        return (!IsWeekEnd(Date));
+    }
+
+    short DaysUntilEndOfWeek(stDate Date)
+    {
+        return (6 - WeekDayOrder(Date));
+    }
+
+    short DaysUntilEndOfMonth(stDate Date)
+    {
+        stDate EndOfMonth;
+
+        EndOfMonth.Day = NumberOfDaysInMon(Date.Month, Date.Year);
+        EndOfMonth.Month = Date.Month;
+        EndOfMonth.Year = Date.Year;
+
+        return (CalculateDifferenceInDays(Date, EndOfMonth, true));
+    }
+
+    short DaysUntilEndOfYear(stDate Date)
+    {
+        stDate EndOfYear;
+
+        EndOfYear.Day = 31;
+        EndOfYear.Month = 12;
+        EndOfYear.Year = Date.Year;
+
+        return (CalculateDifferenceInDays(Date, EndOfYear, true));
+    }
+
+    short ActualVacationDays(stDate Start, stDate End)
+    {
+        short ActualDays = 0;
+
+        while (IsDate1BeforeDate2(Start, End))
+        {
+            if (IsBusinessDay(Start))
+            {
+                ActualDays++;
+            }
+            Start = IncreaseDateByOne(Start);
+        }
+        return (ActualDays);
+    }
+
+    stDate CalculateVacationReturn(stDate DateFrom, short VacationDays)
+    {
+        short WeekEndDays = 0;
+        short i;
+
+        while (IsWeekEnd(DateFrom))
+        {
+            DateFrom = IncreaseDateByOne(DateFrom);
+        }
+
+        for (i = 1; i <= VacationDays + WeekEndDays; i++)
+        {
+            if (IsWeekEnd(DateFrom))
+            {
+                WeekEndDays++;
+            }
+            /* i = 1 i = 2 i = 3 i = 4*/
+            DateFrom = IncreaseDateByOne(DateFrom);
+        }
+
+        if (IsWeekEnd(DateFrom))
+        {
+            DateFrom = IncreaseDateByOne(DateFrom);
+        }
+
+        return (DateFrom);
     }
 }

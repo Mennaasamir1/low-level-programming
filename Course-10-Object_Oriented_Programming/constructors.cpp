@@ -33,5 +33,11 @@ int main(void)
 
     Address.PrintAddress();
 
+    int *ptr = new int(10);
+
+   // *ptr = 10;
+
+    cout << *ptr << endl;
+
     return (0);
 }

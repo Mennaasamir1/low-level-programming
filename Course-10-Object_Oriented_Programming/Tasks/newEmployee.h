@@ -198,7 +198,7 @@ class clsDeveloper : public clsEmployee
             cout << "Title            : " << Title() << endl;
             cout << "Department       :  " << Department() << endl;
             cout << "Salary           : " << Salary() << endl;
-            cout << "Programming Language : " << _MainProgrammingLanguage << endl;
+            cout << "Programming Language : " << ProgrammingLanguage() << endl;
             cout << "__________________________________\n";
         }
 };

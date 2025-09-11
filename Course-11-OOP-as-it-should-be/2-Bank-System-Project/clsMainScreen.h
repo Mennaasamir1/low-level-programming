@@ -13,13 +13,16 @@
 #include "clsLoginRegister.h"
 #include "global.h"
 
+#include "clsCurrencyExchange.h"
+
 class clsMainScreen : protected clsScreen
 {
     enum _enMainMenuOptions
     {
         enList = 1, enAdd = 2, enDel = 3,
         enUpdate = 4, enFind = 5, enTransaction = 6,
-        enManage = 7, enLoginRegister = 8, enLogout = 9
+        enManage = 7, enLoginRegister = 8, 
+        enCurrency = 9, enLogout = 10
     };
 
     static short ReadMainMenuOption(void)
@@ -27,7 +30,7 @@ class clsMainScreen : protected clsScreen
         short Choice;
 
         cout << setw(37) << left << "" << "What do you want to do? ";
-        Choice = clsInputValidate::ReadShortNumberBetween(1, 9);
+        Choice = clsInputValidate::ReadShortNumberBetween(1, 10);
         
         return (Choice);
     }
@@ -90,6 +93,11 @@ class clsMainScreen : protected clsScreen
         CurrentUser = clsUser::Find("", "");
     }
 
+    static void _ShowCurrencyScreen(void)
+    {
+        clsCurrencyExchange::_ShowCurrencyMenu();
+    }
+
     static void _PerformMainMenuOptions(_enMainMenuOptions Option)
     {
         switch (Option)
@@ -142,6 +150,12 @@ class clsMainScreen : protected clsScreen
                 _GoBackToMainMenu();
                 break;
             
+            case _enMainMenuOptions::enCurrency:
+                system("clear");
+                _ShowCurrencyScreen();
+                _GoBackToMainMenu();
+                break;
+
             case _enMainMenuOptions::enLogout:
                 system("clear");
                 _ShowLogoutScreen();
@@ -168,7 +182,8 @@ class clsMainScreen : protected clsScreen
             cout << setw(37) << left << "" << "\t[6] Transactions\n";
             cout << setw(37) << left << "" << "\t[7] Manage users\n";
             cout << setw(37) << left << "" << "\t[8] Login Register log\n";
-            cout << setw(37) << left << "" << "\t[9] Logout\n";
+            cout << setw(37) << left << "" << "\t[9] Currency Exchange\n";
+            cout << setw(37) << left << "" << "\t[10] Logout\n";
             cout << setw(37) << left << "" << "======================================";
             cout << "===========" << endl;
 

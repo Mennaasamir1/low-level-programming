@@ -85,13 +85,9 @@ private:
             {
                  DataLine = _ConverCurrencyObjectToLine(C);
                     MyFile << DataLine << endl;
-
-                
-
             }
 
             MyFile.close();
-
         }
 
     }
@@ -170,7 +166,7 @@ public:
     }
    
 
-  static   clsCurrency FindByCode(string CurrencyCode)
+    static clsCurrency FindByCode(string CurrencyCode)
     {
      
         CurrencyCode = clsString::StringInUppercase(CurrencyCode);
@@ -199,46 +195,64 @@ public:
 
     }
 
-  static   clsCurrency FindByCountry(string Country)
-  {
-      Country = clsString::StringInUppercase(Country);
+    static clsCurrency FindByCountry(string Country)
+    {
+        Country = clsString::StringInUppercase(Country);
 
-      fstream MyFile;
-      MyFile.open("Currencies.txt", ios::in);//read Mode
+        fstream MyFile;
+        MyFile.open("Currencies.txt", ios::in);//read Mode
 
-      if (MyFile.is_open())
-      {
-          string Line;
-          while (getline(MyFile, Line))
-          {
-              clsCurrency Currency = _ConvertLinetoCurrencyObject(Line);
-              if (clsString::StringInUppercase(Currency.Country()) == Country)
-              {
-                  MyFile.close();
-                  return Currency;
-              }
+        if (MyFile.is_open())
+        {
+            string Line;
+            while (getline(MyFile, Line))
+            {
+                clsCurrency Currency = _ConvertLinetoCurrencyObject(Line);
+                if (clsString::StringInUppercase(Currency.Country()) == Country)
+                {
+                    MyFile.close();
+                    return Currency;
+                }
 
-          }
+            }
 
-          MyFile.close();
+            MyFile.close();
 
-      }
+        }
 
-      return _GetEmptyCurrencyObject();
+        return _GetEmptyCurrencyObject();
 
-  }
+    }
 
-  static bool IsCurrencyExist(string CurrencyCode)
+    static bool IsCurrencyExist(string CurrencyCode)
     {
         clsCurrency C1 = clsCurrency::FindByCode(CurrencyCode);
         return (!C1.IsEmpty());
 
     }
 
-  static vector <clsCurrency> GetCurrenciesList()
-  {
-      return _LoadCurrencysDataFromFile();
-  }
+    static vector <clsCurrency> GetCurrenciesList()
+    {
+        return _LoadCurrencysDataFromFile();
+    }
+
+    float ConvertToUSD(float Amount)
+    {
+        return ((float) Amount / Rate());
+    }
+
+    float ConvertCurrencyToAnother(clsCurrency Currency2, float Amount)
+    {
+        float AmountInUSD = ConvertToUSD(Amount);
+
+        if (Currency2.CurrencyCode() == "USD")
+        {
+            return (AmountInUSD);
+        }
+
+        return (AmountInUSD * Currency2.Rate());
+    }
+
 };
 
 

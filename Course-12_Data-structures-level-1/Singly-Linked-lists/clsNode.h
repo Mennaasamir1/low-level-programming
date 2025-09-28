@@ -145,7 +145,7 @@ class Node
             }
 
             /* if there's more than one node in the list */
-            while (Current != NULL && Current->Next == NULL)
+            while (Current != NULL && Current->Next != NULL)
             {
                 Prev = Current;
                 Current = Current->Next;

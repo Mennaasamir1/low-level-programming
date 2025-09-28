@@ -102,13 +102,55 @@ class Node
                 Current = Current->Next;
             }
 
-            /* if there node doesn't exist */
+            /* if the node doesn't exist */
             if (Current == NULL)
             {
                 return;
             }
 
             Prev->Next = Current->Next;
+            delete Current;
+        }
+
+        void DeleteFirstNode(Node *&head)
+        {
+            Node *Current = head;
+
+            if (head == NULL)
+            {
+                return;
+            }
+
+            head = Current->Next;
+            delete Current;
+        }
+
+        void DeleteLastNode(Node *&head)
+        {
+            Node *Current = head;
+            Node *Prev = head;
+
+            /* if the linked list is empty */
+            if (head == NULL)
+            {
+                return;
+            }
+
+            /* if there's only one node in the list */
+            if (Current->Next == NULL)
+            {
+                head = NULL;
+                delete Current;
+                return;
+            }
+
+            /* if there's more than one node in the list */
+            while (Current != NULL && Current->Next == NULL)
+            {
+                Prev = Current;
+                Current = Current->Next;
+            }
+            Prev->Next = NULL;
             delete Current;
         }
 };

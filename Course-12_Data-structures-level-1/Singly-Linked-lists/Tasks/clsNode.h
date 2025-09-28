@@ -71,4 +71,28 @@ class Node
         NewNode->Next = PrevNode->Next;
         PrevNode->Next = NewNode;
     }
+
+    void InsertAtEnd(Node *&head, int Value)
+    {
+        Node *NewNode, *LastNode;
+
+        NewNode = new Node;
+        NewNode->Data = Value;
+        NewNode->Next = NULL;
+    
+        if (head == NULL)
+        {
+           head = NewNode;
+           return;
+        }
+
+        LastNode = head;
+
+        while (LastNode->Next != NULL)
+        {
+            LastNode = LastNode->Next;
+        }
+
+        LastNode->Next = NewNode;
+    }
 };

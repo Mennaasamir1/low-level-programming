@@ -18,4 +18,57 @@ class Node
 
         cout << endl;
     }
+
+    int CountNodes(Node *&head)
+    {
+        int Count = 0;
+
+        while (head != NULL)
+        {
+            Count++;
+            head = head->Next;
+        }
+        return (Count);
+    }
+
+    void InsertAtBeginning(Node *&head, int Value)
+    {
+        Node *NewNode;
+
+        if (head == NULL)
+        {
+            head->Data = Value;
+            head->Next = NULL;
+        }
+
+        NewNode = new Node;
+        NewNode->Data = Value;
+        NewNode->Next = head;
+
+        head = NewNode;
+
+    }
+
+    static Node* FindNode(Node *head, int Value)
+    {
+        while (head != NULL)
+        {
+            if (head->Data == Value)
+            {
+                return (head);
+            }
+            head = head->Next;
+        }
+    }
+
+    void InsertAfterValue(Node *&PrevNode, int Value)
+    {
+        Node *NewNode = new Node;
+
+        NewNode->Data = Value;
+        NewNode->Next = NULL;
+
+        NewNode->Next = PrevNode->Next;
+        PrevNode->Next = NewNode;
+    }
 };

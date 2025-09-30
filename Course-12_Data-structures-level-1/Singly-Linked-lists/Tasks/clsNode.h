@@ -95,4 +95,98 @@ class Node
 
         LastNode->Next = NewNode;
     }
+
+
+    void DeleteFirstNode(Node *&head)
+    {
+        Node *Temp = head;
+
+        if (head == NULL)
+        {
+            return;
+        }
+
+        Temp = head->Next;
+        head = NULL;
+        delete head;
+        head = Temp;
+    }
+
+    void DeleteNodeByValue(Node *&head, int Value)
+    {
+        Node *Prev = head;
+        Node *Current = head;
+
+        if (head == NULL)
+        {
+            return;
+        }
+
+        if (Current->Data == Value)
+        {
+            head = Current->Next;
+            delete Current;
+            return;
+        }
+
+        while (Current != NULL && Current->Data != Value)
+        {
+            Prev = Current;
+            Current = Current->Next;
+        }
+
+        if (Current == NULL)
+        {
+            return;
+        }
+
+        Prev->Next = Current->Next;
+        Current = NULL;
+        delete Current;
+
+    }
+
+    void DeleteLastNode(Node *&head, int Value)
+    {
+        Node *Current = head, *Prev = head;
+
+        if (head == NULL) /* the list is empty*/
+        {
+            return;
+        }
+
+        if (Current->Next == NULL)
+        {
+            head = NULL;
+            delete Current;
+            return;
+        }
+
+        while (Current != NULL && Current->Next != NULL)
+        {
+            Prev = Current;
+            Current = Current->Next;
+        }
+        Prev->Next = NULL;
+        delete Current;
+    }
+
+    int Search(Node *head, int Value)
+    {
+        Node *Temp = head;
+        int NumOfNodes = CountNodes(head);
+        int i = 1;
+
+        while (Temp != NULL)
+        {
+            if (Temp->Data == Value)
+            {
+                return (i);
+            }
+           
+            Temp = Temp->Next;
+            i++;
+        }
+        return (-1);
+    }
 };

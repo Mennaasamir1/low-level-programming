@@ -44,9 +44,7 @@ int main(void)
 
     Node::Display(head);
 
-    Target = Node::FindNode(head, 20);
-
-    Temp.InsertAtBeginning(Target, 500);
+    Temp.InsertAtBeginning(head, 500);
 
     Node::Display(head);
 

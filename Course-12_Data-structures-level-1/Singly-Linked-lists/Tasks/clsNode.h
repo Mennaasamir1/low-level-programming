@@ -189,4 +189,52 @@ class Node
         }
         return (-1);
     }
+
+    int FindMax(Node *head)
+    {
+        Node *Temp = head;
+        int Max = Temp->Data;
+
+        while (Temp != NULL)
+        {
+            if (Max < Temp->Data)
+            {
+                Max = Temp->Data;
+            }
+
+            Temp = Temp->Next;
+        }
+        return (Max);
+    }
+
+    int FindMin(Node *head)
+    {
+        Node *Temp = head;
+        int Min = Temp->Data;
+
+        while (Temp != NULL)
+        {
+            if (Min > Temp->Data)
+            {
+                Min = Temp->Data;
+            }
+
+            Temp = Temp->Next;
+        }
+        return (Min);
+    }
+
+    int SumOfAllNodes(Node *head)
+    {
+        Node *Temp = head;
+        int SumOfNodes = 0;
+
+        while (Temp != NULL)
+        {
+            SumOfNodes += Temp->Data;
+
+            Temp = Temp->Next;
+        }
+        return (SumOfNodes);
+    }
 };

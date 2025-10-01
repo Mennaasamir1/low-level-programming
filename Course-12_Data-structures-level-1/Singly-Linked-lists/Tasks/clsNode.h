@@ -237,4 +237,48 @@ class Node
         }
         return (SumOfNodes);
     }
+
+    void ReverstList(Node *&head)
+    {
+        Node *Prev = NULL, *Current = head, *Next = NULL;
+
+        if (head == NULL)
+        {
+            return;
+        }
+
+        while (Current != NULL)
+        {
+            Next = Current->Next;
+            Current->Next = Prev;
+            Prev = Current;
+            Current = Next;
+        }
+        head = Prev;
+    }
+
+    int FindNthNode(Node *head, int Position)
+    {
+        /* we have to find the value of nth node from the end of the list */
+        Node *Temp = head;
+        Node *Temp2 = head;
+
+        int i;
+
+        for (i = 0; i < Position; i++)
+        {
+            if (Temp == NULL)
+            {
+                return (-1);
+            }
+            Temp = Temp->Next;
+        }
+        
+        while (Temp != NULL)
+        {
+            Temp = Temp->Next;
+            Temp2 = Temp2->Next;
+        }
+        return (Temp2->Data);
+    }
 };

@@ -4,7 +4,7 @@ int main(void)
 {
     Node *head = NULL;
     Node Temp;
-    short Result;
+    Node *Result;
 
     Node *NewNode1 = new Node;
     Node *NewNode2 = new Node;
@@ -37,7 +37,7 @@ int main(void)
 
     Result = Temp.FindNode(head, 30);
 
-    if (Result != -1)
+    if (Result != NULL)
     {
         cout << "\nNode Found.\n";
     }

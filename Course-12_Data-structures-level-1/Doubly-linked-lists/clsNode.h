@@ -111,4 +111,54 @@ class Node
 
             delete NodeToDelete;
         }
+
+        void DeleteFirstNode(Node *&head)
+        {
+            Node *Temp = head;
+
+            if (head == NULL)
+            {
+                return;
+            }
+
+            else
+            {
+                Temp = head;
+                head = head->Next;
+
+                if (head != NULL)
+                {
+                    head->Prev = NULL;
+                }
+                delete Temp;
+            }
+        }
+
+        void DeleteLastNode(Node *&head)
+        {
+            Node *Temp = head;
+            Node *LastNode;
+
+            if (head == NULL)
+            {
+                return;
+            }
+
+            if (head->Next == NULL)
+            {
+                delete head;
+                head = NULL;
+                return;
+            }
+
+            /* this step helps us reach the node before the last node */
+            while (Temp->Next->Next != NULL)
+            {
+                Temp = Temp->Next;
+            }
+
+            LastNode = Temp->Next;
+            Temp->Next = NULL;
+            delete LastNode;
+        }
 };

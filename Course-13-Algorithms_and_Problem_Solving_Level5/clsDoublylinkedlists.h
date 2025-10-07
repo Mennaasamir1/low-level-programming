@@ -16,6 +16,15 @@ class clsDblLinkedList
         Node *Prev = NULL;
     };
 
+    /* To free each node after program finishes to avoid memory leaks */
+    ~clsDblLinkedList(void)
+    {
+        while (head != NULL)
+        {
+            DeleteFirstNode();
+        }
+    }
+
         Node *head = NULL;
 
         void InsertAtBeginning(T Value)

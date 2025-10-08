@@ -5,178 +5,221 @@ template <class T>
 
 class clsDblLinkedList
 {
+    protected:
+        int _Size = 0;
     public:
     
-
-    class Node
-    {
-        public:
-        T Data;
-        Node *Next = NULL;
-        Node *Prev = NULL;
-    };
-
-    /* To free each node after program finishes to avoid memory leaks */
-    ~clsDblLinkedList(void)
-    {
-        while (head != NULL)
+        class Node
         {
-            DeleteFirstNode();
-        }
-    }
+            public:
+            T Data;
+            Node *Next = NULL;
+            Node *Prev = NULL;
+        };
 
-        Node *head = NULL;
-
-        void InsertAtBeginning(T Value)
+        /* To free each node to avoid memory leaks */
+        ~clsDblLinkedList(void)
         {
-            Node *NewNode = new Node;
-            NewNode->Data = Value;
-            NewNode->Next = NULL;
-            NewNode->Prev = NULL;
-
-            if (head == NULL)
+            while (head != NULL)
             {
-                head = NewNode;
-                NewNode->Prev = NULL;
-                NewNode->Next = NULL;
-                return;
+                DeleteFirstNode();
             }
+        }
 
-            else
+            Node *head = NULL;
+
+            void InsertAtBeginning(T Value)
             {
+                Node *NewNode = new Node;
+                NewNode->Data = Value;
                 NewNode->Next = head;
-                head->Prev = NewNode;
-                head = NewNode;
-            }
-        }
+                NewNode->Prev = NULL;
 
-        void PrintList(void)
-        {
-            Node *Current = head;
-
-            while (Current != NULL)
-            {
-                cout << Current->Data << " ";
-                Current = Current->Next;
-            }
-            cout << endl;
-        }
-
-        Node* Find(T Value)
-        {
-            Node *Current = head;
-        
-            while (Current != NULL)
-            {
-                if (Current->Data == Value)
+                if (head != NULL)
                 {
-                    return (Current);
+                    head->Prev = NewNode;
                 }
-                Current = Current->Next;
-            }
-            return (NULL);
-        }
 
-        void InsertAfter(Node *&PreviousNode, T Value)
-        {
-            Node *Current = head;
-            Node *NewNode = new Node;
+                head = NewNode;
+
+                _Size++;
+            }
+
+            void PrintList(void)
+            {
+                Node *Current = head;
+
+                while (Current != NULL)
+                {
+                    cout << Current->Data << " ";
+                    Current = Current->Next;
+                }
+                cout << endl;
+            }
+
+            Node* Find(T Value)
+            {
+                Node *Current = head;
             
-            NewNode->Data = Value;
-            NewNode->Next = NULL;
-            NewNode->Prev = NULL;
-    
-            if (head == NULL)
-            {
-                return;
-            }
-            
-            NewNode->Prev = PreviousNode;
-            NewNode->Next = PreviousNode->Next;
-            PreviousNode->Next = NewNode;
-        }
-
-        void InsertAtEnd(T Value)
-        {
-            Node *Current = head;
-
-            if (head == NULL)
-            {
-                return;
+                while (Current != NULL)
+                {
+                    if (Current->Data == Value)
+                    {
+                        return (Current);
+                    }
+                    Current = Current->Next;
+                }
+                return (NULL);
             }
 
-            Node *NewNode = new Node;
-            NewNode->Data = Value;
-            NewNode->Prev = NULL;
-            NewNode->Next = NULL;
-
-            while (Current->Next->Next != NULL)
+            void InsertAfter(Node *&PreviousNode, T Value)
             {
-                Current = Current->Next;
-            }
-            Current->Next->Next = NewNode;
-            NewNode->Prev = Current->Next->Next;
-            NewNode->Next = NULL;
-
-        }
-
-        void DeleteNode(Node *ToDeleteNode)
-        {
-            if (head == NULL)
-            {
-                return;
+                Node *Current = head;
+                Node *NewNode = new Node;
+                
+                NewNode->Data = Value;
+                NewNode->Next = PreviousNode->Next;
+                NewNode->Prev = PreviousNode;
+        
+                if (PreviousNode->Next != NULL)
+                {
+                    PreviousNode->Next->Prev = NewNode;
+                }
+                PreviousNode->Next = NewNode;
+                _Size++;
             }
 
-            if (head == ToDeleteNode)
+            void InsertAtEnd(T Value)
             {
-                head = ToDeleteNode->Next;
-                head = NULL;
-                delete head;
+                Node *Current = head;
+
+                if (head == NULL)
+                {
+                    return;
+                }
+
+                Node *NewNode = new Node;
+                NewNode->Data = Value;
+                NewNode->Next = NULL;
+
+                while (Current->Next != NULL)
+                {
+                    Current = Current->Next;
+                }
+                Current->Next = NewNode;
+                NewNode->Prev = Current;
+                _Size++;
             }
 
-            ToDeleteNode->Prev->Next = ToDeleteNode->Next;
-            ToDeleteNode->Prev = NULL;
-            ToDeleteNode->Next = NULL;
-            delete ToDeleteNode;
-        }
-
-        void DeleteFirstNode(void)
-        {
-            Node *Current = head;
-
-            if (head == NULL)
+            void DeleteNode(Node *&ToDeleteNode)
             {
-                return;
+                if (head == NULL || ToDeleteNode == NULL)
+                {
+                    return;
+                }
+
+                if (head == ToDeleteNode)
+                {
+                    head = ToDeleteNode->Next;
+                    delete head;
+                }
+                if (ToDeleteNode->Next != NULL)
+                {
+                    ToDeleteNode->Next->Prev = ToDeleteNode->Prev;
+                }
+                if (ToDeleteNode->Prev != NULL)
+                {
+                    ToDeleteNode->Prev->Next = ToDeleteNode->Next;
+                }
+                delete ToDeleteNode;
+
+                _Size--;
             }
 
-            head = Current->Next;
-            Current = NULL;
-            delete Current;
-        }
-
-        void DeleteLastNode(void)
-        {
-            Node *Current, *LastNode;
-
-            Current = head;
-
-            if (head == NULL)
+            void DeleteFirstNode(void)
             {
-                return;
+                Node *Current = head;
+
+                if (head == NULL)
+                {
+                    return;
+                }
+
+                Current = head;
+                head = head->Next;
+
+                if (head != NULL)
+                {
+                    head->Prev = NULL;
+                }
+                delete Current;
+                _Size--;
             }
 
-            if (head->Next == NULL)
+            void DeleteLastNode(void)
             {
-                delete head;
-                return;
+                Node *Current, *LastNode;
+
+                Current = head;
+
+                if (head == NULL)
+                {
+                    return;
+                }
+
+                if (head->Next == NULL)
+                {
+                    delete head;
+                    _Size--;
+                    return;
+                }
+
+                while (Current->Next->Next != NULL)
+                {
+                    Current = Current->Next;
+                }
+                LastNode = Current->Next;
+                Current->Next = NULL;
+                delete LastNode;
+                
+                _Size--;
             }
 
-            while (Current->Next->Next != NULL)
+            int Size(void)
             {
-                Current = Current->Next;
+                return (_Size);
             }
-            LastNode = Current->Next;
-            Current->Next = NULL;
-            delete LastNode;
-        }
+
+            bool IsEmpty(void)
+            {
+                return (_Size == 0 ? true :  false);
+            }
+
+            void Clear(void)
+            {
+                while (_Size > 0)
+                {
+                    DeleteFirstNode();
+                }
+            }
+
+            void Reverse(void)
+            {
+                /*Node *Current = head;*/
+                Node *Next = NULL, *Prev = NULL;
+
+                if (head == NULL)
+                {
+                    return;
+                }
+
+                while (head != NULL)
+                {
+                    Next = head->Next;
+                    head->Next = Prev;
+                    Prev = head;
+                    head = Next;
+                }
+                head = Prev;
+            }
 };

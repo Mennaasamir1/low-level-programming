@@ -249,23 +249,16 @@ class clsDblLinkedList
 
             T GetItem(int Index)
             {
-                Node *Current = head;
-                int Counter = 0;
+               Node *ItemNode = GetNode(Index);
 
-                if (Index > _Size - 1 || Index < 0)
+                if (ItemNode == NULL)
                 {
-                    return (-1);
+                    return (NULL);
                 }
 
-                while (Current != NULL && (Current->Next != NULL))
+                else
                 {
-                    if (Index == Counter)
-                    {
-                        break;
-                    }
-                    Current = Current->Next;
-                    Counter++;
+                    return (ItemNode->Data);
                 }
-                return (Current->Data);
             }
 };

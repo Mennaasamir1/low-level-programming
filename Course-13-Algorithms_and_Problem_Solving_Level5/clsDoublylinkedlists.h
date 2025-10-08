@@ -277,4 +277,19 @@ class clsDblLinkedList
                     return (false);
                 }
             }
+
+            bool InsertAfter(int Index, T AddedValue)
+            {
+                Node *NodeToAddAfter = GetNode(Index);
+                
+                if (NodeToAddAfter != NULL)
+                {
+                    InsertAfter(NodeToAddAfter, AddedValue);
+                    return (true);
+                }
+                else
+                {
+                    return (false);
+                }
+            }
 };

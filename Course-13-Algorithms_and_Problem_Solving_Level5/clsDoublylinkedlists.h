@@ -261,4 +261,20 @@ class clsDblLinkedList
                     return (ItemNode->Data);
                 }
             }
+
+            bool UpdateItem(int Index, T NewValue)
+            {
+                Node *ItemNode = GetNode(Index);
+
+                if (ItemNode != NULL)
+                {
+                    ItemNode->Data = NewValue;
+                    return (true);
+                }
+
+                else
+                {
+                    return (false);
+                }
+            }
 };

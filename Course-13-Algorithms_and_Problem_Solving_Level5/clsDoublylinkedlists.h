@@ -222,4 +222,50 @@ class clsDblLinkedList
                 }
                 head = Prev;
             }
+
+            Node* GetNode(int Position)
+            {
+                int Counter = 0;
+                Node *Current = head;
+
+                /* to check if position or index is out of range */
+                if (Position > _Size - 1 || Position < 0)
+                {
+                    return (NULL);
+                }
+                
+                while (Current != NULL && (Current->Next != NULL))
+                {
+                    if (Counter == Position)
+                    {
+                        break;
+                    }
+
+                    Current = Current->Next;
+                    Counter++;
+                }
+                return (Current);
+            }
+
+            T GetItem(int Index)
+            {
+                Node *Current = head;
+                int Counter = 0;
+
+                if (Index > _Size - 1 || Index < 0)
+                {
+                    return (-1);
+                }
+
+                while (Current != NULL && (Current->Next != NULL))
+                {
+                    if (Index == Counter)
+                    {
+                        break;
+                    }
+                    Current = Current->Next;
+                    Counter++;
+                }
+                return (Current->Data);
+            }
 };

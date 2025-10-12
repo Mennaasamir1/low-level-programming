@@ -191,5 +191,97 @@ class clsMyDynamicArray
         Delete(_Size - 1);
     }
 
+    int Find(T Value)
+    {
+        int i;
+
+        for (i = 0; i < _Size; i++)
+        {
+            if (Array[i] == Value)
+            {
+                return (i);
+            }
+        }
+        return (-1);
+    }
+
+    bool DeleteItem(T Value)
+    {
+        int i;
+        int Index = Find(Value);
+
+        if (Index == -1)
+        {
+            return (false);
+        }
+
+        Delete(Index);
+        return (true);
+    }
+
+    bool InsertAt(int Index, T Value)
+    {
+        int i;
+        int Counter = 0;
+
+        if (Index >= _Size || Index < 0)
+        {
+            return (false);
+        }
+        _Size++;
+
+        Temp = new T[_Size];
+
+        for (i = 0; i < Index; i++)
+        {
+            Temp[i] = Array[i];
+        }
+        Temp[Index] = Value;
+
+        for (i = Index; i < _Size - 1; i++)
+        {
+            Temp[i + 1] = Array[i];
+        }
+
+        delete [] Array;
+        Array = Temp;
+        return (true);
+    }
+
+    void InsertAtBeginning(T Value)
+    {
+        InsertAt(0, Value);
+    }
+
+    bool InsertBefore(int Index, T Value)
+    {
+        if (Index < 1)
+        {
+            return (InsertAt(0, Value));
+        }
+        else
+        {
+            return (InsertAt(Index - 1, Value));
+        }
+    }
+
+    bool InsertAfter(int Index, T Value)
+    {
+        int i;
+
+        if (Index >= _Size)
+        {
+            return (InsertAt(_Size - 1, Value));
+        }
+        else
+        {
+            return (InsertAt(Index + 1, Value));
+        }
+    }
+
+    bool InsertAtEnd(T Value)
+    {
+        return (InsertAt(_Size, Value));
+    }
 };
 
